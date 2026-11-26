@@ -18,6 +18,11 @@ Mở Terminal và chạy:
 Nếu cluster chưa sẵn sàng, cần cấu hình môi trường trước khi triển khai.
 
 ## 3. Triển khai tài nguyên
+Trước khi chạy `kubectl apply -f kubernetes/deployment.yaml`:
+
+- Thay `TEN_TAI_KHOAN/cloud-native-app:1.0` bằng tên image Flask mà cụm Kubernetes có thể tải.
+- Tạo Secret `dr-db-secret` trong namespace `ungdung-dr`, với hai khóa
+  `username` và `password` theo cấu hình PostgreSQL của môi trường lab.
 
 Tại thư mục gốc của dự án, chạy:
 
@@ -35,18 +40,28 @@ Tại thư mục gốc của dự án, chạy:
 
 Pod cần ở trạng thái Running và sẵn sàng trước khi kiểm tra truy cập.
 
-## 5. Kiểm tra ứng dụng mẫu
+## 5. Kiểm tra ứng dụng Flask trên Kubernetes
 
-Chạy:
+Kiểm tra Deployment đã sẵn sàng:
 
-    kubectl port-forward -n ungdung-dr service/ungdung-dichvu 8080:80
+```powershell
+kubectl rollout status deployment/ungdung-mau -n ungdung-dr
+kubectl get pods -n ungdung-dr
+```
 
-Giữ Terminal đang chạy, sau đó mở trình duyệt tại:
+Mở cổng truy cập ứng dụng:
 
-    http://localhost:8080
+```powershell
+kubectl port-forward -n ungdung-dr service/ungdung-dichvu 8080:80
+```
 
-Nếu trang NGINX xuất hiện, ứng dụng mẫu đã có thể được truy cập qua
-port-forward.
+Giữ cửa sổ PowerShell đang chạy. Mở `http://localhost:8080/health`
+để kiểm tra phản hồi của ứng dụng Flask. Sau đó, mở
+`http://localhost:8080/students/count` để kiểm tra ứng dụng đọc được
+số bản ghi từ PostgreSQL.
+
+Nếu Pod chưa sẵn sàng, kiểm tra tên image, Secret `dr-db-secret`
+và cấu hình kết nối PostgreSQL.
 
 ## 6. Xử lý lỗi cơ bản
 
