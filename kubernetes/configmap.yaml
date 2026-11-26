@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ungdung-cau-hinh
+  namespace: ungdung-dr
+data:
+  TEN_UNG_DUNG: "Ung dung Cloud Native"
+  MOI_TRUONG: "thu-nghiem"

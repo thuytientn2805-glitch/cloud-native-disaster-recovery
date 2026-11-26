@@ -1,0 +1,21 @@
+# Mat khau va cau hinh rieng
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# File backup PostgreSQL
+backup/backups/
+backup/restore-test/
+*.backup
+*.dump
+
+# File tam
+.vs/
+.vscode/
+credentials-velero
+velero.exe

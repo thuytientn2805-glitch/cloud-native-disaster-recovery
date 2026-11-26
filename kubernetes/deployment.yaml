@@ -1,0 +1,61 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ungdung-mau
+  namespace: ungdung-dr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ungdung-mau
+  template:
+    metadata:
+      labels:
+        app: ungdung-mau
+    spec:
+      containers:
+        - name: flask-app
+          image: TEN_TAI_KHOAN/cloud-native-app:1.0
+          ports:
+            - containerPort: 5000
+          env:
+            - name: TEN_UNG_DUNG
+              valueFrom:
+                configMapKeyRef:
+                  name: ungdung-cau-hinh
+                  key: TEN_UNG_DUNG
+            - name: MOI_TRUONG
+              valueFrom:
+                configMapKeyRef:
+                    name: ungdung-cau-hinh
+                    key: MOI_TRUONG
+            - name: DB_HOST
+              value: "DIA_CHI_POSTGRESQL"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: "cloud_native_db"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: dr-db-secret
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dr-db-secret
+                  key: password
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "300m"
+              memory: "256Mi"
