@@ -44,3 +44,7 @@ Ba log trong [results/](results/) ghi nhận thời gian chạy bước phục h
 ## Tái lập trên môi trường thực hành
 
 Xem [hướng dẫn triển khai](docs/huong-dan-trien-khai.md) và tạo `.env` từ `.env.example` với giá trị riêng. Chỉ chạy `tests/test-dr-e2e.ps1` trên hệ thống thử nghiệm có thể khôi phục vì kịch bản có bước xóa dữ liệu trong bảng để giả lập sự cố.
+
+## Tái tạo bảng và biểu đồ
+
+Chạy `python results/tao_bieu_do.py`. Xem [ghi chú nghiệm thu](docs/nghiem-thu.md) để biết phạm vi kiểm thử, cách dọn lab, chi phí và kế hoạch kiểm thử lại.
