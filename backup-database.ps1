@@ -64,7 +64,7 @@ try {
     }
 
     # Kiem tra file da ton tai tren MinIO
-    & $mc stat "$bucket/$($tepCu.Name)" 2>$null | Out-Null
+    & $mc stat "$bucket/$tenFile" 2>$null | Out-Null
 
     if ($LASTEXITCODE -ne 0) {
         throw "Khong tim thay file backup tren MinIO."
